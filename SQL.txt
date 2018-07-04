@@ -1,0 +1,163 @@
+-- phpMyAdmin SQL Dump
+-- version 4.4.15.5
+-- http://www.phpmyadmin.net
+--
+-- Хост: 127.0.0.1:3306
+-- Время создания: Июл 03 2018 г., 22:05
+-- Версия сервера: 5.5.48
+-- Версия PHP: 5.3.29
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- База данных: `pricelist`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `DocPrice`
+--
+
+CREATE TABLE IF NOT EXISTS `DocPrice` (
+  `id` bigint(20) NOT NULL,
+  `datetime` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `DocPrice`
+--
+
+INSERT INTO `DocPrice` (`id`, `datetime`, `status`) VALUES
+(1, '2018-07-26 00:00:00', 0),
+(2, '2018-07-16 00:00:00', 1),
+(3, '2018-07-01 00:00:00', 0),
+(4, '2018-07-03 00:00:00', 1),
+(5, '2018-07-03 00:00:00', 0),
+(6, '2018-07-03 00:00:00', 1),
+(7, '2018-07-03 00:00:00', 0),
+(8, '2018-07-03 00:00:00', 1),
+(9, '2018-07-03 00:00:00', 0),
+(10, '2018-06-02 00:00:00', 1),
+(11, '2018-06-02 00:00:00', 0),
+(12, '2018-06-01 00:00:00', 1),
+(13, '2018-05-05 00:00:00', 0),
+(14, '2018-05-05 00:00:00', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `DocPriceBody`
+--
+
+CREATE TABLE IF NOT EXISTS `DocPriceBody` (
+  `id` bigint(20) NOT NULL,
+  `doc_id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  `price` decimal(10,0) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `DocPriceBody`
+--
+
+INSERT INTO `DocPriceBody` (`id`, `doc_id`, `product_id`, `price`) VALUES
+(1, 1, 2, '20'),
+(2, 2, 1, '0'),
+(3, 3, 5, '3000'),
+(4, 4, 6, '2500'),
+(13, 5, 9, '3499'),
+(14, 6, 10, '1300'),
+(15, 12, 1, '4600'),
+(16, 13, 1, '5555');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `Product`
+--
+
+CREATE TABLE IF NOT EXISTS `Product` (
+  `id` bigint(20) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `Product`
+--
+
+INSERT INTO `Product` (`id`, `title`, `description`, `status`) VALUES
+(1, 'Продукт1', 'Описание1', 1),
+(2, 'Продукт2', 'Описание2', 0),
+(3, 'Продукт 3', 'описание', 1),
+(4, 'Продукт 4', 'описание', 1),
+(5, 'Продукт 5', 'описание', 0),
+(6, 'Продукт 6', 'описание', 1),
+(7, 'Продукт 7', 'описание', 1),
+(8, 'Продукт 8', 'описание', 0),
+(9, 'Продукт 9', 'описание', 1),
+(10, 'Продукт 10', 'описание', 1),
+(11, 'Продукт 11', 'описание', 0),
+(12, 'Продукт 12', 'описание', 1),
+(13, 'Продукт 13', 'описание', 1);
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `DocPrice`
+--
+ALTER TABLE `DocPrice`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Индексы таблицы `DocPriceBody`
+--
+ALTER TABLE `DocPriceBody`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `DocPriceBody_fk0` (`doc_id`),
+  ADD KEY `DocPriceBody_fk1` (`product_id`);
+
+--
+-- Индексы таблицы `Product`
+--
+ALTER TABLE `Product`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `DocPrice`
+--
+ALTER TABLE `DocPrice`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT для таблицы `DocPriceBody`
+--
+ALTER TABLE `DocPriceBody`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT для таблицы `Product`
+--
+ALTER TABLE `Product`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `DocPriceBody`
+--
+ALTER TABLE `DocPriceBody`
+  ADD CONSTRAINT `DocPriceBody_fk0` FOREIGN KEY (`doc_id`) REFERENCES `DocPrice` (`id`),
+  ADD CONSTRAINT `DocPriceBody_fk1` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`);
