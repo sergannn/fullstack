@@ -13,10 +13,11 @@ class MainController{
     {
         //создание обьекта модели с параметром подключения к БД
         $ModerPrice = new ModelPrice($this->_db);
+      
 
         if (isset($_POST['calendar'])) {
            $date = $_POST['calendar']; 
-           $pricelist = $ModerPrice->getPriceList($date);
+           $pricelist = $ModerPrice->getAllProduct();
         }
 
         //отображение вида

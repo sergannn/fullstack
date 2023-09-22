@@ -7,7 +7,7 @@ include_once 'models/ModelPrice.php';
 include 'controllers/MainController.php';
 
 //подключение к БД
-$db = new DataBase('localhost', 'root', '', 'pricelist');
+$db = new DataBase('localhost', 'root', 'root', 'test');
 
 //Передача управления контроллеру
 $controller = new MainController($db);

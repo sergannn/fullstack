@@ -7,7 +7,9 @@ class ModelPrice{
   {
     $this->_db = $db;
   }
-
+  function query($q) {
+    return $this->_db->Query($q);
+  }
   function getAllProduct()
   {
     return $this->_db->Query('SELECT * FROM `Product` ORDER BY ID');
@@ -15,7 +17,7 @@ class ModelPrice{
 
   function getPriceList($date)
   {
-    $sqlString = "SELECT 
+     $sqlString = "SELECT 
                   title, 
                   description, 
                   document_id, 

@@ -7,13 +7,15 @@ class DataBase{
     public function __construct($host,$user,$pass,$db)
     {
         $this->_linkIndentifier = mysqli_connect($host,$user,$pass,$db) or die(mysqli_connect_error()); 
-        mysqli_select_db($this->_linkIndentifier,$dbName);
+        mysqli_select_db($this->_linkIndentifier,'test');
     }
 
     //функция для запросов к бд с возвратом ассоциативного массива
     public function Query($query)
     {
         $result = mysqli_query($this->_linkIndentifier,$query);
+        echo mysqli_error($this->_linkIndentifier);
+        //echo $query;
         if( $result ){
         $arr = array();
         while($row = mysqli_fetch_assoc($result))
